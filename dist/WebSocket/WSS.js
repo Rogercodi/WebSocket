@@ -12,12 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.webSocketServer = void 0;
 const ws_1 = require("ws");
 const API_1 = require("../API");
-const onConnection_1 = require("./EventsControllers/onConnection");
+const customWebSocket_1 = require("./customWebSocket");
+// import { CustomWebSocket, ICustomWebSocket } from "./customWebSocket";
 class webSocketServer {
     constructor() {
         this.API = new API_1.API();
         this.wss = new ws_1.WebSocketServer({ server: this.API.http });
-        this.wss.on("connection", new onConnection_1.OnConnectionWss().connection.bind(onConnection_1.OnConnectionWss));
+        this.connection();
     }
     ;
     init(port) {
@@ -31,6 +32,12 @@ class webSocketServer {
         });
     }
     ;
+    connection() {
+        this.wss.on('connection', (ws) => {
+            console.log('new connection established');
+            const user = new customWebSocket_1.CustomWebSocket(ws);
+        });
+    }
 }
 exports.webSocketServer = webSocketServer;
 ;

@@ -18,8 +18,11 @@ const main = async () => {
 
 main().catch((e) => {
     console.log(e)
-})
+});
 
+process.on("uncaughtException", err => {
+    console.log("uncaughtException", err);
+});
 
 
 

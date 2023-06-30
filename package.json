@@ -4,7 +4,7 @@
   "description": "You must develop a backend to replay telemetry data from a bike.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsc && node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -12,10 +12,12 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "uuid": "^9.0.0",
     "ws": "^8.13.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
+    "@types/uuid": "^9.0.2",
     "@types/ws": "^8.5.5"
   }
 }
