@@ -20,3 +20,6 @@ export class API implements IAPI {
         })
     };
 }
+
+
+const s = 1
