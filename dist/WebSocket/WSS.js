@@ -13,11 +13,13 @@ exports.webSocketServer = void 0;
 const ws_1 = require("ws");
 const API_1 = require("../API");
 const customWebSocket_1 = require("./customWebSocket");
-// import { CustomWebSocket, ICustomWebSocket } from "./customWebSocket";
+const dataToServe_1 = require("./dataToServe");
 class webSocketServer {
     constructor() {
         this.API = new API_1.API();
         this.wss = new ws_1.WebSocketServer({ server: this.API.http });
+        this.data = new dataToServe_1.DataToServe().data;
+        this.intervals = new dataToServe_1.DataToServe().intervalics;
         this.connection();
     }
     ;
@@ -35,9 +37,10 @@ class webSocketServer {
     connection() {
         this.wss.on('connection', (ws) => {
             console.log('new connection established');
-            const user = new customWebSocket_1.CustomWebSocket(ws);
+            new customWebSocket_1.CustomWebSocket(ws, this.data, this.intervals);
         });
     }
+    ;
 }
 exports.webSocketServer = webSocketServer;
 ;

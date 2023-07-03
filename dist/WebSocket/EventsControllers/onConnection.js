@@ -24,7 +24,7 @@ class OnConnectionWss {
         return __awaiter(this, void 0, void 0, function* () {
             this.parsedData = simfile_json_1.default;
             this.intervals = (0, calculateIntervals_1.calculateIntervals)();
-            let index = 4770;
+            let index = 0;
             let flag = false;
             ws.send(JSON.stringify({
                 kind: "data",

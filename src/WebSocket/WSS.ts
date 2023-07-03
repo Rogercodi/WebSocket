@@ -1,22 +1,22 @@
 import WebSocket,{ WebSocketServer } from "ws";
 import { API } from "../API";
 import { IAPI } from "../Types/types";
-import { WebSocketMethods } from "./webSocketMethods";
-import {v4} from 'uuid'
 import { CustomWebSocket } from "./customWebSocket";
-// import { CustomWebSocket, ICustomWebSocket } from "./customWebSocket";
-
+import { DataToServe, IData } from "./dataToServe";
 
 
 export class webSocketServer {
   private API: IAPI;
   private wss: WebSocketServer;
-  public methods: any
- 
+  private data: IData[];
+  private intervals: number[];
+
   constructor() {
     this.API = new API();
     this.wss = new WebSocketServer({ server: this.API.http });
-    this.connection()
+    this.data = new DataToServe().data;
+    this.intervals = new DataToServe().intervalics;
+    this.connection();
   };
 
 
@@ -31,9 +31,9 @@ export class webSocketServer {
     public connection() {
       this.wss.on('connection', (ws: WebSocket) => {
         console.log('new connection established')
-        const user = new CustomWebSocket(ws);
+        new CustomWebSocket(ws, this.data, this.intervals);
       })
-    }
+    };
 
 
 };
