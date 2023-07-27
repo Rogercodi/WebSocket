@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WebSocketMethods = void 0;
-const dataToSend_1 = require("./dataToSend");
+const dataToSend_1 = require("../Repositories/dataToSend");
 class WebSocketMethods {
     constructor(parsedMessage, user) {
         this.message = parsedMessage;
@@ -33,6 +33,7 @@ class WebSocketMethods {
         }
     }
     play() {
+        console.log(`Started by user ${this.user.id}`);
         this.user.flag = true;
         this.user.ws.send(JSON.stringify(new dataToSend_1.DataToSend().sendStatus('status', 'play')));
         function delay(obj, time, ws) {
@@ -57,11 +58,12 @@ class WebSocketMethods {
         }))();
     }
     stop() {
-        console.log("stop");
+        console.log(`Stopped by user ${this.user.id}`);
         this.user.flag = false;
         this.user.ws.send(JSON.stringify(new dataToSend_1.DataToSend().sendStatus("status", "stop")));
     }
     reset() {
+        console.log(`Stopped by user ${this.user.id}`);
         this.user.flag = false;
         this.user.index = 0;
         this.user.ws.send(JSON.stringify(new dataToSend_1.DataToSend().sendStatus("status", "stop")));

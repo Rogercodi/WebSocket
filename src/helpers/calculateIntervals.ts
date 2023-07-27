@@ -1,11 +1,11 @@
 import file from "../DataFile/simfile.json";
-import { TMark } from "../Types/types";
+import { TMarkData} from "../Types/types";
 
 export function calculateIntervals() {
   //Transform time stamps to ms
   let getMili: number[] = [];
 
-  file.data.map((mark: TMark) => {
+  file.data.map((mark: TMarkData) => {
     getMili.push(new Date(mark.time).getTime());
   });
 

@@ -1,15 +1,16 @@
 import { v4 } from "uuid";
 import WebSocket from "ws";
-import { ParsedMessage } from "./parseMessage";
+import { ParsedMessage } from "../Repositories/parseMessage";
 import { WebSocketMethods } from "./webSocketMethods";
-import { IData } from "./dataToServe";
+import { TMarkData } from "../../Types/types";
+
 
 export interface ICustomWebSocket {
   ws: WebSocket;
   id: string;
   index: number;
   flag: boolean;
-  data: IData[];
+  data: TMarkData[];
   intervals: number[]
 }
 
@@ -20,10 +21,10 @@ export class CustomWebSocket implements ICustomWebSocket {
   id: string;
   index: number;
   flag: boolean;
-  data: IData[];
+  data: TMarkData[];
   intervals: number[];
 
-  constructor(ws: WebSocket, data: IData[], intervals: number[]) {
+  constructor(ws: WebSocket, data: TMarkData[], intervals: number[]) {
     this.ws = ws; 
     this.id = v4();
     this.index = 0;
@@ -37,6 +38,7 @@ export class CustomWebSocket implements ICustomWebSocket {
     return this;
   }
 
+  
   public getMessage() {
     this.ws.on("message", (message: Buffer) => {
       const parsedMessage: string = new ParsedMessage().parseMessage(message);

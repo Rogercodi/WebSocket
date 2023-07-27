@@ -1,8 +1,9 @@
 import express, { Application } from 'express';
 import * as http from 'http';
 import router from './router/Router';
+import { IAPI } from './Types/types';
 
-export class API  {
+export class API implements IAPI {
     private app: Application;
     public http: http.Server;
     

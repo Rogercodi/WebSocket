@@ -5,28 +5,32 @@ export interface IAPI {
   listen(port: number, host: string): Promise<void>;
 }
 
-export interface IOnMessage {
-  onPlayCommand(data: TFileData, intervals: number[], ws: WebSocket): void;
-  onStopCommand(ws: WebSocket): void;
-  onResetCommand(data: TFileData, ws: WebSocket): void;
-}
 
-export type TMessageData = {
-  command: string;
-};
-
-export type TFileData = {
-  startTime: string;
-  data: TMark[];
-};
-
-export interface IOnConnectionWss {
-  data: TFileData;
-}
-
-export type TMark = {
+export type TMarkData = {
   time: string;
   rpm: number;
   gear: string;
   speed: number;
 };
+
+export type TMarkSend = {
+  kind: string,
+  data: TMarkData
+}
+
+export type TStatusSend = {
+  kind: string,
+  data: {
+    status: string
+  }
+}
+
+export type TJsonFile = {
+  startTime: string,
+  data: TMarkData[]
+}
+
+export interface IDataFromFile {
+  data: TMarkData[],
+  intervalics: number[]
+}

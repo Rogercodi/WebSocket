@@ -12,14 +12,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.webSocketServer = void 0;
 const ws_1 = require("ws");
 const API_1 = require("../API");
-const customWebSocket_1 = require("./customWebSocket");
-const dataToServe_1 = require("./dataToServe");
+const customWebSocket_1 = require("./Service/customWebSocket");
+;
+const dataFromFile_1 = require("./Repositories/dataFromFile");
+const dataToSend_1 = require("./Repositories/dataToSend");
 class webSocketServer {
     constructor() {
         this.API = new API_1.API();
         this.wss = new ws_1.WebSocketServer({ server: this.API.http });
-        this.data = new dataToServe_1.DataToServe().data;
-        this.intervals = new dataToServe_1.DataToServe().intervalics;
+        this.data = new dataFromFile_1.DataFromFile().data;
+        this.intervals = new dataFromFile_1.DataFromFile().intervalics;
         this.connection();
     }
     ;
@@ -36,8 +38,8 @@ class webSocketServer {
     ;
     connection() {
         this.wss.on('connection', (ws) => {
-            console.log('new connection established');
             new customWebSocket_1.CustomWebSocket(ws, this.data, this.intervals);
+            ws.send(JSON.stringify(new dataToSend_1.DataToSend().sendData('data', this.data[0])));
         });
     }
     ;

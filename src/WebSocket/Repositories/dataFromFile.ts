@@ -1,38 +1,34 @@
-import file from '../DataFile/simfile.json'
-import { TMark } from '../Types/types';
+import path from 'path';
 
 
-export interface IData {
-          time: string,
-          rpm: number,
-          gear: string,
-          speed: number
-      }
-
-
-export interface IDataToServe {
-    data: IData[],
-    intervalics: number[]
-}
+import { IDataFromFile, TMarkData } from '../../Types/types';
+import { getConfiguration } from '../../config/getConfig';
 
 
 
-export class DataToServe implements IDataToServe {
-    data: IData[];
+
+export class DataFromFile implements IDataFromFile {
+    data: TMarkData[];
     intervalics: number[];
 
 
     constructor(){
-        this.data = file.data;
+        this.data = this.getData();
         this.intervalics = this.getIntervals();
-        console.log(this.intervalics)
+    }
+
+    private getData () {
+      const fileDir = new getConfiguration().getEnvVar().fileDir;
+      console.log(path.join(__dirname + fileDir))
+      const jsonFile = require(path.join(__dirname + fileDir));
+      return jsonFile.data;
     }
 
     private getIntervals () {
        
             //Transform time stamps to ms
             let getMili: number[] = [];
-            file.data.map((mark: TMark) => {
+            this.data.map((mark: TMarkData) => {
               getMili.push(new Date(mark.time).getTime());
             });
           
